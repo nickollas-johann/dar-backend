@@ -1,0 +1,70 @@
+import 'package:mysql1/mysql1.dart';
+import '../infra/data/db_config.dart';
+import '../models.dart/user_model.dart';
+import 'dao.dart';
+
+class UserDAO implements DAO<UserModel> {
+  final DBConfig _dbConfig;
+
+  UserDAO(this._dbConfig);
+  @override
+  Future<bool> create(UserModel value) async {
+    var results = await _execQuery(
+        'INSERT TO user_table (user_name, user_email, user_type, user_cel, user_crea) (?,?,?,?,?);',
+        [
+          value.userName,
+          value.userEmail,
+          value.userType,
+          value.userCel,
+          value.userCrea
+        ]);
+    return results.affectedRows > 0;
+  }
+
+  @override
+  Future<bool> delete(int id) async {
+    var results = _execQuery('DELETE from user_table WHERE user_id = ?;', [id]);
+
+    return results.affectedRows > 0;
+  }
+
+  @override
+  Future<List<UserModel>> getAll() async {
+    ResultRow results = _execQuery('SELECT * FROM farm_db.user_table;');
+    return results
+        .map((r) => UserModel.fromMap(r.fields))
+        .toList()
+        .cast<UserModel>();
+  }
+
+  @override
+  Future<UserModel?> getOne(int id) async {
+    var results =
+        _execQuery('SELECT * FROM farm_db.user_table WHERE user_id = ?;', [id]);
+    return results.affectedRows == 0
+        ? null
+        : UserModel.fromMap(results.first.fields);
+  }
+
+  @override
+  Future<bool> update(UserModel value) async {
+    var results = _execQuery(
+        'UPDATE user_table SET user_id = ?, user_password = ?, user_cel = ?;',
+        [value.userId, value.userPassword, value.userCel]);
+
+    return results.affectedRows > 0;
+  }
+
+  Future<UserModel?> getByEmail(String email) async {
+    var results =
+        _execQuery('SELECT * FROM user_table WHERE user_email = ?;', [email]);
+    return results.affectedRows == 0
+        ? null
+        : UserModel.fromEmail(results.first.fields);
+  }
+
+  _execQuery(String sql, [List? params]) async {
+    var connection = await _dbConfig.connection;
+    return await connection.query(sql, params);
+  }
+}
