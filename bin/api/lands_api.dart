@@ -1,13 +1,12 @@
 import 'dart:convert';
-
 import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
 import '../models.dart/lands_model.dart';
-import '../services/lands_service.dart';
+import '../services/service_interface.dart';
 import 'api.dart';
 
 class LandsApi extends Api {
-  final LandsService _service;
+  final ServiceInterface<LandsModel> _service;
 
   LandsApi(this._service);
 
@@ -22,7 +21,8 @@ class LandsApi extends Api {
       List<LandsModel> lands = await _service.findAll();
       List<Map> landsMap = lands.map((land) => land.toMap()).toList();
       return Response.ok(jsonEncode(landsMap),
-          headers: {'content-type': 'application/json'});
+          headers: {'content-type': 'application/json'}
+          );
     });
 
     router.post('/lands', (Request req) async {

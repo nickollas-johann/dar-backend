@@ -18,13 +18,18 @@ class Injectors {
     var di = DependencyInjector();
 
     di.register<DBConfig>(() => MySqlDBConfig());
+    di.register<SecurityService>(() => SecurityServiceImpl());
+
+    // Lands
     di.register<ServiceInterface<LandsModel>>(() => LandsService());
     di.register<LandsApi>(() => LandsApi(di.get()));
 
-    di.register<SecurityService>(() => SecurityServiceImpl());
+    // User
     di.register<UserDAO>(() => UserDAO(di.get()));
     di.register<UserService>(() => UserService(di.get()));
     di.register<UserApi>(() => UserApi(di.get()));
+
+    // // Login
     di.register<LoginService>(() => LoginService(di.get()));
     di.register<LoginApi>(() => LoginApi(di.get(), di.get()));
 

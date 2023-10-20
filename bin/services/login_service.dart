@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:password_dart/password_dart.dart';
 import '../to/auth_to.dart';
 import 'user_service.dart';
@@ -13,15 +12,15 @@ class LoginService {
     try {
       var user = await _userService.findByEmail(authTo.userEmail);
       if (user == null) {
-        return -1;
+        return -2;
       } else {
         return Password.verify(authTo.password, user.userPassword!)
             ? user.userId!
-            : -1;
+            : -3;
       }
     } catch (e) {
       log('[ERROR] -> Authenticate method by email ${authTo.userEmail}');
+      return -4;
     }
-    return -1;
   }
 }

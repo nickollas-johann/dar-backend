@@ -10,10 +10,11 @@ class UserDAO implements DAO<UserModel> {
   @override
   Future<bool> create(UserModel value) async {
     var results = await _execQuery(
-        'INSERT TO user_table (user_name, user_email, user_type, user_cel, user_crea) (?,?,?,?,?);',
+        'INSERT INTO user_table (user_name, user_email, user_password, user_type, user_cel, user_crea) VALUES (?,?,?,?,?,?);',
         [
           value.userName,
           value.userEmail,
+          value.userPassword,
           value.userType,
           value.userCel,
           value.userCrea
@@ -57,7 +58,7 @@ class UserDAO implements DAO<UserModel> {
 
   Future<UserModel?> getByEmail(String email) async {
     var results =
-        _execQuery('SELECT * FROM user_table WHERE user_email = ?;', [email]);
+        await _execQuery('SELECT * FROM user_table WHERE user_email = ?;', [email]);
     return results.affectedRows == 0
         ? null
         : UserModel.fromEmail(results.first.fields);

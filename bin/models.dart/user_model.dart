@@ -36,9 +36,20 @@ class UserModel {
       ..userPassword = map['user_password'];
   }
 
+  factory UserModel.fromRequest(Map map) {
+    return UserModel()
+      ..userName = map['user_name']
+      ..userEmail = map['user_email']
+      ..userPassword = map['user_password']
+      ..userType = map['user_type']
+      ..userCel = map['user_cel']
+      ..userCrea = map['user_crea'];
+      
+  }
+
   factory UserModel.fromMap(Map<String, dynamic> map) {
     return UserModel.create(
-        map['user_id'] as int,
+        map['user_id'] != null ? map['user_id'] as int : null,
         map['user_name'] as String,
         map['user_email'] as String,
         map['user_type'] as String,

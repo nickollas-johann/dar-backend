@@ -64,6 +64,7 @@ class SecurityServiceImpl implements SecurityService<JWT> {
           if (req.context['jwt'] == null) {
             return Response.forbidden('Not Authorized');
           }
+          return null;
         },
       );
 }

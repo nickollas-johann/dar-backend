@@ -1,6 +1,6 @@
 import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
-
+import 'dart:convert';
 import '../models.dart/user_model.dart';
 import '../services/user_service.dart';
 import 'api.dart';
@@ -19,7 +19,9 @@ class UserApi extends Api {
         return Response(400);
       }
       var result = await _userService.save(
-        UserModel.fromJson(body),
+        UserModel.fromRequest(
+          jsonDecode(body),
+        ),
       );
       if (result) {
         return Response(201);

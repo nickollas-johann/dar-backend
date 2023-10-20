@@ -14,6 +14,11 @@ class AuthTo {
     };
   }
 
+  factory AuthTo.fromRequest(String body) {
+    var map = jsonDecode(body);
+    return AuthTo(map['user_email'], map['user_password']);
+  }
+
   factory AuthTo.fromMap(Map<String, dynamic> map) {
     return AuthTo(
       map['user_email'] as String,
