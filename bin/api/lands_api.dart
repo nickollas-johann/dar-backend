@@ -17,7 +17,7 @@ class LandsApi extends Api {
   }) {
     Router router = Router();
 
-    router.get('/lands', (Request req) async {
+    router.get('/lands', (Request req, String userId) async {
       List<LandsModel> lands = await _service.findAll();
       List<Map> landsMap = lands.map((land) => land.toMap()).toList();
       return Response.ok(jsonEncode(landsMap),
@@ -25,22 +25,26 @@ class LandsApi extends Api {
           );
     });
 
-    router.post('/lands', (Request req) async {
+    router.get('/lands', (Request req, String userId) async {
+      var user = await _service.findOne(int.parse(userId));
+      return Response.ok(jsonEncode(user));
+    });
+
+    router.post('/lands', (Request req, String userId) async {
       var body = await req.readAsString();
       _service.save(LandsModel.fromJson(body));
       return Response(201);
     });
 
-    router.put('/lands', (Request req) {
-      // String? id = req.url.queryParameters['id'];
-      // _service.save();
-      return Response(201);
+    router.put('/lands', (Request req, String userId) async {
+      var body = await req.readAsString();
+      var result = await _service.save(LandsModel.fromJson(body));
+      return Response.ok(result);
     });
 
-    router.delete('/lands', (Request req) {
-      _service.delete(0);
-      // String? id = req.url.queryParameters['id'];
-      return Response.ok('Deletar');
+    router.delete('/lands', (Request req, String userId) async {
+      await _service.delete(int.parse(userId));
+      return Response.ok('Deletou a terra');
     });
 
     return createHandler(

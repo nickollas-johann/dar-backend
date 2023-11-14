@@ -2,29 +2,29 @@ import 'dart:convert';
 
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 class LandsModel {
-  int? id;
+  int? landsId;
   double landSize;
-  String localization;
+  String location;
 
   LandsModel({
-    this.id,
+    this.landsId,
     required this.landSize,
-    required this.localization,
+    required this.location,
   });
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'id': id,
-      'landSize': landSize,
-      'localization': localization,
+      'lands_id': landsId,
+      'lands_size': landSize,
+      'location': location,
     };
   }
 
   factory LandsModel.fromMap(Map<String, dynamic> map) {
     return LandsModel(
-      id: map['id'] != null ? map['id'] as int : null,
-      landSize: map['landSize'] as double,
-      localization: map['localization'] as String,
+      landsId: map['lands_id'] != null ? map['lands_id'] as int : null,
+      landSize: map['lands_size'] as double,
+      location: map['location'] as String,
     );
   }
 

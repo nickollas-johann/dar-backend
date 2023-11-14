@@ -1,36 +1,32 @@
+import '../dao/lands_dao.dart';
 import '../models.dart/lands_model.dart';
-import '../utils/list_extension.dart';
 import 'service_interface.dart';
 
 class LandsService implements ServiceInterface<LandsModel> {
-  
-  List<LandsModel> fakeDB = [];
+  final LandsDAO _landsDAO;
+
+  LandsService(this._landsDAO);
   @override
   Future<bool> delete(int id) async {
-    fakeDB.removeWhere((element) => element.id == id);
-    return true;
+    return await _landsDAO.delete(id);
   }
 
   @override
   Future<List<LandsModel>> findAll() async {
-    return fakeDB;
+    return await _landsDAO.getAll();
   }
 
   @override
-   Future<LandsModel?>findOne(int id) async {
-    return fakeDB.firstWhere((element) => element.id == id);
+  Future<LandsModel?> findOne(int id) async {
+    return await _landsDAO.getOne(id);
   }
 
   @override
-  Future<bool> save(LandsModel value)async {
-    LandsModel? landsModel =
-        fakeDB.firstWhereOrnull((element) => element.id == value.id);
-    if (landsModel == null) {
-      fakeDB.add(value);
+  Future<bool> save(LandsModel value) async {
+    if (value.landsId == null) {
+      return await _landsDAO.create(value);
     } else {
-      var index = fakeDB.indexOf(landsModel);
-      fakeDB[index] = value;
+      return await _landsDAO.update(value);
     }
-    return true;
   }
 }

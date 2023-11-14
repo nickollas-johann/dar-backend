@@ -9,7 +9,7 @@ class UserDAO implements DAO<UserModel> {
   UserDAO(this._dbConfig);
   @override
   Future<bool> create(UserModel value) async {
-    var results = await _execQuery(
+    var results = await _dbConfig.execQuery(
         'INSERT INTO user_table (user_name, user_email, user_password, user_type, user_cel, user_crea) VALUES (?,?,?,?,?,?);',
         [
           value.userName,
@@ -24,14 +24,16 @@ class UserDAO implements DAO<UserModel> {
 
   @override
   Future<bool> delete(int id) async {
-    var results = _execQuery('DELETE from user_table WHERE user_id = ?;', [id]);
+    var results = await
+        _dbConfig.execQuery('DELETE from user_table WHERE user_id = ?;', [id]);
 
     return results.affectedRows > 0;
   }
 
   @override
   Future<List<UserModel>> getAll() async {
-    ResultRow results = _execQuery('SELECT * FROM farm_db.user_table;');
+    ResultRow results = await
+        _dbConfig.execQuery('SELECT * FROM farm_db.user_table;');
     return results
         .map((r) => UserModel.fromMap(r.fields))
         .toList()
@@ -40,8 +42,8 @@ class UserDAO implements DAO<UserModel> {
 
   @override
   Future<UserModel?> getOne(int id) async {
-    var results =
-        _execQuery('SELECT * FROM farm_db.user_table WHERE user_id = ?;', [id]);
+    var results = await _dbConfig
+        .execQuery('SELECT * FROM farm_db.user_table WHERE user_id = ?;', [id]);
     return results.affectedRows == 0
         ? null
         : UserModel.fromMap(results.first.fields);
@@ -49,7 +51,7 @@ class UserDAO implements DAO<UserModel> {
 
   @override
   Future<bool> update(UserModel value) async {
-    var results = _execQuery(
+    var results = await _dbConfig.execQuery(
         'UPDATE user_table SET user_id = ?, user_password = ?, user_cel = ?;',
         [value.userId, value.userPassword, value.userCel]);
 
@@ -57,15 +59,10 @@ class UserDAO implements DAO<UserModel> {
   }
 
   Future<UserModel?> getByEmail(String email) async {
-    var results =
-        await _execQuery('SELECT * FROM user_table WHERE user_email = ?;', [email]);
+    var results = await _dbConfig
+        .execQuery('SELECT * FROM user_table WHERE user_email = ?;', [email]);
     return results.affectedRows == 0
         ? null
         : UserModel.fromEmail(results.first.fields);
-  }
-
-  _execQuery(String sql, [List? params]) async {
-    var connection = await _dbConfig.connection;
-    return await connection.query(sql, params);
   }
 }

@@ -26,4 +26,10 @@ class MySqlDBConfig implements DBConfig {
           db: await CustomEnv().get<String>(key: 'db'),
         ),
       );
+
+  @override
+  execQuery(String sql, [List? params]) async {
+    var connection = await this.connection;
+    return await connection.query(sql, params);
+  }
 }

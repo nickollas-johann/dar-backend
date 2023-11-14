@@ -1,6 +1,8 @@
 import 'package:shelf/shelf.dart';
+import 'api/culture_api.dart';
 import 'api/lands_api.dart';
 import 'api/login_api.dart';
+import 'api/orders_api.dart';
 import 'api/user_api.dart';
 import 'infra/custom_server.dart';
 import 'infra/dependency_injector/injectors.dart';
@@ -23,6 +25,12 @@ void main() async {
       )
       .add(
         di.get<LandsApi>().getHandler(isSecurity: true),
+      )
+      .add(
+        di.get<OrdersApi>().getHandler(isSecurity: true),
+      )
+      .add(
+        di.get<CulturesApi>().getHandler(isSecurity: true),
       )
       .handler;
 
