@@ -17,33 +17,38 @@ class LandsApi extends Api {
   }) {
     Router router = Router();
 
-    router.get('/lands', (Request req, String userId) async {
-      List<LandsModel> lands = await _service.findAll();
-      List<Map> landsMap = lands.map((land) => land.toMap()).toList();
-      return Response.ok(jsonEncode(landsMap),
-          headers: {'content-type': 'application/json'}
-          );
+    router.get('/<userId>/lands', (Request req, String userId) async {
+      try {
+        List<LandsModel> lands = await _service.findAll(int.parse(userId));
+        List<Map> landsMap = lands.map((land) => land.toMap()).toList();
+
+        return Response.ok(jsonEncode(landsMap),
+            headers: {'content-type': 'application/json'});
+      } catch (e, s) {
+        print(e);
+        print(s);
+      }
     });
 
-    router.get('/lands', (Request req, String userId) async {
-      var user = await _service.findOne(int.parse(userId));
-      return Response.ok(jsonEncode(user));
-    });
+    // router.get('/<userId>/lands', (Request req, String userId) async {
+    //   var user = await _service.findOne(int.parse(userId));
+    //   return Response.ok(jsonEncode(user));
+    // });
 
-    router.post('/lands', (Request req, String userId) async {
+    router.post('/<userId>/lands', (Request req, String userId) async {
       var body = await req.readAsString();
-      _service.save(LandsModel.fromJson(body));
+      await _service.save(LandsModel.fromJson(body));
       return Response(201);
     });
 
-    router.put('/lands', (Request req, String userId) async {
+    router.put('/lands', (Request req) async {
       var body = await req.readAsString();
       var result = await _service.save(LandsModel.fromJson(body));
-      return Response.ok(result);
+      return result ? Response(200) : Response(500);
     });
 
-    router.delete('/lands', (Request req, String userId) async {
-      await _service.delete(int.parse(userId));
+    router.delete('/lands/<landId>', (Request req, String landId) async {
+      await _service.delete(int.parse(landId));
       return Response.ok('Deletou a terra');
     });
 

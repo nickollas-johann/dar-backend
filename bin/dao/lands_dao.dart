@@ -9,10 +9,8 @@ class LandsDAO implements DAO<LandsModel> {
   @override
   Future<bool> create(LandsModel value) async {
     var results = await _dbConfig.execQuery(
-        'INSERT INTO lands_table (lands_size, location) VALUES (?,?);', [
-      value.landSize,
-      value.location,
-    ]);
+        'INSERT INTO lands_table (lands_size, location, user_id) VALUES (?,?,?);',
+        [value.landSize, value.location, value.userId]);
     return results.affectedRows > 0;
   }
 
@@ -25,9 +23,9 @@ class LandsDAO implements DAO<LandsModel> {
   }
 
   @override
-  Future<List<LandsModel>> getAll() async {
-    var results =
-        await _dbConfig.execQuery('SELECT * FROM farm_db.lands_table;');
+  Future<List<LandsModel>> getAll(int userId) async {
+    var results = await _dbConfig.execQuery(
+        'SELECT * FROM farm_db.lands_table WHERE user_id = ?;', [userId]);
     return results
         .map((r) => LandsModel.fromMap(r.fields))
         .toList()
@@ -46,8 +44,8 @@ class LandsDAO implements DAO<LandsModel> {
   @override
   Future<bool> update(LandsModel value) async {
     var results = await _dbConfig.execQuery(
-        'UPDATE lands_table SET lands_id = ?, lands_size = ?, location = ?;',
-        [value.landsId, value.landSize, value.location]);
+        'UPDATE lands_table SET lands_size = ?, location = ? WHERE lands_id = ?;',
+        [value.landSize, value.location, value.landsId]);
 
     return results.affectedRows > 0;
   }

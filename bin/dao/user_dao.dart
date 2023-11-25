@@ -31,9 +31,9 @@ class UserDAO implements DAO<UserModel> {
   }
 
   @override
-  Future<List<UserModel>> getAll() async {
+  Future<List<UserModel>> getAll(int id) async {
     ResultRow results = await
-        _dbConfig.execQuery('SELECT * FROM farm_db.user_table;');
+        _dbConfig.execQuery('SELECT * FROM farm_db.user_table WHERE user_id = ?;', [id]);
     return results
         .map((r) => UserModel.fromMap(r.fields))
         .toList()

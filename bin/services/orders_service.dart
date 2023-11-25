@@ -13,8 +13,8 @@ class OrdersService implements ServiceInterface<OrderModel> {
   }
 
   @override
-  Future<List<OrderModel>> findAll() async {
-    return await _ordersDAO.getAll();
+  Future<List<OrderModel>> findAll(int id) async {
+    return await _ordersDAO.getAll(id);
   }
 
   @override
