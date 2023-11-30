@@ -14,7 +14,7 @@ class OrdersApi extends Api {
     Router router = Router();
 
     router.get('/<userId>/orders', (Request req, String userId) async {
-      List<OrderModel> orders = await _service.findAll();
+      List<OrderModel> orders = await _service.findAll(int.parse(userId));
       List<Map> ordersMap = orders.map((order) => order.toMap()).toList();
 
       return Response.ok(jsonEncode(ordersMap),

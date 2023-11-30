@@ -7,8 +7,8 @@ class MySqlDBConfig implements DBConfig {
   MySqlConnection? _connection;
   @override
   Future<MySqlConnection> get connection async {
-    _connection ??= await createConnection();
-    print(await _connection!.query('SELECT * FROM farm_db.user_table;'));
+    print('Funcionou');
+   _connection ??= await createConnection();
     if (_connection == null) {
       throw Exception('ERROR/DB -> Failed to create connection');
     }

@@ -13,8 +13,8 @@ class CultureService implements ServiceInterface<CultureModel> {
   }
 
   @override
-  Future<List<CultureModel>> findAll() async {
-    return await _culturesDAO.getAll();
+  Future<List<CultureModel>> findAll(int id) async {
+    return await _culturesDAO.getAll(id);
   }
 
   @override

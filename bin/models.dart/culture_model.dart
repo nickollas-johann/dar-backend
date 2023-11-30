@@ -2,18 +2,18 @@
 import 'dart:convert';
 
 class CultureModel {
-  String? cultureId;
-  String landId;
+  int? cultureId;
+  int landId;
   String cultureName;
-  String cultureDiscription;
+  String? cultureDiscription;
   DateTime cultureStart;
   DateTime estimatedTime;
-  
+
   CultureModel({
     this.cultureId,
     required this.landId,
     required this.cultureName,
-    required this.cultureDiscription,
+    this.cultureDiscription,
     required this.cultureStart,
     required this.estimatedTime,
   });
@@ -21,26 +21,29 @@ class CultureModel {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'culture_id': cultureId,
-      'lands_id': landId,
       'culture_name': cultureName,
-      'culture_discription': cultureDiscription,
       'culture_start': cultureStart.millisecondsSinceEpoch,
       'estimated_time': estimatedTime.millisecondsSinceEpoch,
+      'lands_id': landId,
+      'culture_discription': cultureDiscription,
     };
   }
 
   factory CultureModel.fromMap(Map<String, dynamic> map) {
     return CultureModel(
-      cultureId: map['culture_id'] as String,
-      landId: map['lands_id'] as String,
+      cultureId: map['culture_id'] != null ? map['culture_id'] as int : null,
       cultureName: map['culture_name'] as String,
-      cultureStart: DateTime.fromMillisecondsSinceEpoch(map['culture_start'] as int),
-      estimatedTime: DateTime.fromMillisecondsSinceEpoch(map['estimated_time'] as int),
-      cultureDiscription: map['culture_discription'] as String,
+      cultureStart: DateTime.parse(map['culture_start'].toString()).toUtc(),
+      estimatedTime: DateTime.parse(map['estimated_time'].toString()).toUtc(),
+      landId: map['lands_id'] as int,
+      cultureDiscription: map['culture_discription'] != null
+          ? map['culture_discription'] as String
+          : null,
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory CultureModel.fromJson(String source) => CultureModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory CultureModel.fromJson(String source) =>
+      CultureModel.fromMap(json.decode(source) as Map<String, dynamic>);
 }

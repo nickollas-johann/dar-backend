@@ -12,7 +12,7 @@ class UserService implements ServiceInterface<UserModel> {
   Future<bool> delete(int value) async => await _userDAO.delete(value);
 
   @override
-  Future<List<UserModel>> findAll() async => await _userDAO.getAll();
+  Future<List<UserModel>> findAll(int id) async => await _userDAO.getAll(id);
 
   @override
   Future<UserModel?> findOne(int id) async => await _userDAO.getOne(id);

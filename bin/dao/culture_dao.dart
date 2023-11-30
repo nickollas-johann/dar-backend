@@ -10,9 +10,8 @@ class CulturesDAO implements DAO<CultureModel> {
   @override
   Future<bool> create(CultureModel value) async {
     var results = await _dbConfig.execQuery(
-        'INSERT INTO orders_table (culture_id, culture_name, begin_time, estimated_time, lands_id, culture_discription) VALUES (?,?,?,?)',
+        'INSERT INTO culture_table (culture_name, culture_start, estimated_time, lands_id, culture_discription) VALUES (?,?,?,?,?)',
         [
-          value.cultureId,
           value.cultureName,
           value.cultureStart,
           value.estimatedTime,
@@ -31,9 +30,9 @@ class CulturesDAO implements DAO<CultureModel> {
   }
 
   @override
-  Future<List<CultureModel>> getAll() async {
+  Future<List<CultureModel>> getAll(int id) async {
     var results =
-        await _dbConfig.execQuery('SELECT * FROM farm_db.culture_table;');
+        await _dbConfig.execQuery('SELECT * FROM farm_db.culture_table WHERE lands_id = ?;', [id]);
     return results
         .map((r) => CultureModel.fromMap(r.fields))
         .toList()
@@ -43,7 +42,7 @@ class CulturesDAO implements DAO<CultureModel> {
   @override
   Future<CultureModel?> getOne(int id) async {
     var results = await _dbConfig.execQuery(
-        'SELECT * FROM farm_db.culture_table INNER  JOIN culture_table ON culture_table.lands_id = lands_table.lands_id;', [id]);
+        'SELECT * FROM farm_db.user_table u INNER JOIN lands_table l ON u.user_id = l.user_id INNER JOIN culture_table c ON l.lands_id = c.lands_id WHERE u.user_id = ?' [id]);
     return results.affectedRows == 0
         ? null
         : CultureModel.fromMap(results.first.fields);

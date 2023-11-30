@@ -12,8 +12,8 @@ class LandsService implements ServiceInterface<LandsModel> {
   }
 
   @override
-  Future<List<LandsModel>> findAll() async {
-    return await _landsDAO.getAll();
+  Future<List<LandsModel>> findAll(int id) async {
+    return await _landsDAO.getAll(id);
   }
 
   @override

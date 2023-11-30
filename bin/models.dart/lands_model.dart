@@ -5,11 +5,13 @@ class LandsModel {
   int? landsId;
   double landSize;
   String location;
+  int userId;
 
   LandsModel({
     this.landsId,
     required this.landSize,
     required this.location,
+    required this.userId,
   });
 
   Map<String, dynamic> toMap() {
@@ -17,6 +19,7 @@ class LandsModel {
       'lands_id': landsId,
       'lands_size': landSize,
       'location': location,
+      'user_id': userId,
     };
   }
 
@@ -25,10 +28,12 @@ class LandsModel {
       landsId: map['lands_id'] != null ? map['lands_id'] as int : null,
       landSize: map['lands_size'] as double,
       location: map['location'] as String,
+      userId: map['user_id'] as int,
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory LandsModel.fromJson(String source) => LandsModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory LandsModel.fromJson(String source) =>
+      LandsModel.fromMap(json.decode(source) as Map<String, dynamic>);
 }

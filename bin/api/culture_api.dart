@@ -14,8 +14,8 @@ class CulturesApi extends Api {
   Handler getHandler({List<Middleware>? middlewares, bool isSecurity = false}) {
     Router router = Router();
 
-    router.get('/cultures', (Request req, String landId, String userId) async {
-      List<CultureModel> cultures = await _cultureService.findAll();
+    router.get('/<userId>/cultures', (Request req, String userId) async {
+      List<CultureModel> cultures = await _cultureService.findAll(int.parse(userId));
       List<Map> culturesMap = cultures.map((order) => order.toMap()).toList();
 
       return Response.ok(jsonEncode(culturesMap),
@@ -24,17 +24,17 @@ class CulturesApi extends Api {
 
     router.post('/cultures', (Request req) async {
       var body = await req.readAsString();
-      _cultureService.save(CultureModel.fromJson(body));
+      await _cultureService.save(CultureModel.fromJson(body));
       return Response(201);
     });
 
-    router.put('/cultures/<cultureId>', (Request req, String landId, String userId, String cultureId) async {
+    router.put('/cultures/<cultureId>', (Request req, String cultureId) async {
       var body = await req.readAsString();
       var result = await _cultureService.save(CultureModel.fromJson(body));
       return Response.ok(result);
     });
 
-    router.delete('/cultures/<cultureId>', (Request req, String landId, String userId, String cultureId) async {
+    router.delete('/cultures/<cultureId>', (Request req, String cultureId) async {
       await _cultureService.delete(int.parse(cultureId));
       return Response.ok('Ordem deletada');
     });
