@@ -3,7 +3,7 @@ import 'parser_extension.dart';
 
 class CustomEnv {
   static Map<String, String> _map = {};
-  static String _file = '../../.env';
+  static String _file = '.env';
 
   CustomEnv._();
 
@@ -22,13 +22,8 @@ class CustomEnv {
   static Future<void> _load() async {
     List<String> lines = (await _readFile()).split('\n')
       ..removeWhere((element) => element.isEmpty);
-    for (var l in lines) {
-      var a = l.split('=')[0];
-      var b = l.split('=')[1];
-
-      print(a);
-      print(b);
-    }
+    _map = {for (var l in lines) l.split('=')[0]: l.split('=')[1]};
+    print(_map);
   }
 
   static Future<String> _readFile() async {

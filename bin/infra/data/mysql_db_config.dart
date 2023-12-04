@@ -19,11 +19,11 @@ class MySqlDBConfig implements DBConfig {
   Future<MySqlConnection> createConnection() async =>
       await MySqlConnection.connect(
         ConnectionSettings(
-          host: await CustomEnv().get<String>(key: 'server_address'),
-          port: await CustomEnv().get<int>(key: 'db_port'),
-          user: await CustomEnv().get<String>(key: 'db_user'),
-          password: await CustomEnv().get<String>(key: 'db_pass'),
-          db: await CustomEnv().get<String>(key: 'db'),
+          host: await CustomEnv.get<String>(key: 'server_address') ?? 'localhost',
+          port: await CustomEnv.get<int>(key: 'db_port') ?? 3306,
+          user: await CustomEnv.get<String>(key: 'db_user') ?? 'root',
+          password: await CustomEnv.get<String>(key: 'db_pass') ?? 'root',
+          db: await CustomEnv.get<String>(key: 'db') ?? 'farm_db',
         ),
       );
 

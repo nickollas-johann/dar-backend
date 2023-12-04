@@ -12,7 +12,7 @@ class SecurityServiceImpl implements SecurityService<JWT> {
       'userId': userId,
       'roles': ['admin', 'farmer', 'professional']
     });
-    String key = await CustomEnv().get(key: 'jwt_key');
+    String key = await CustomEnv.get(key: 'jwt_key') ?? 'dart_SecretKey';
 
     String token = jwt.sign(SecretKey(key));
     return token;
@@ -20,7 +20,7 @@ class SecurityServiceImpl implements SecurityService<JWT> {
 
   @override
   Future<JWT?> validateJWT(String token) async {
-    String key = await CustomEnv().get(key: 'jwt_key');
+    String key = await CustomEnv.get(key: 'jwt_key') ?? 'dart_SecretKey';
 
     try {
       return JWT.verify(token, SecretKey(key));
