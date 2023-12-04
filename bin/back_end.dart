@@ -10,7 +10,7 @@ import 'infra/middleware_interception.dart';
 import 'utils/custom_env.dart';
 
 void main() async {
-  // CustomEnv.fromFile('.env');
+  CustomEnv.fromFile('../.env');
 
   final di = await Injectors().initialize();
 
@@ -36,11 +36,12 @@ void main() async {
 
   var handler = Pipeline()
       .addMiddleware(logRequests())
-      .addMiddleware(MiddlewareInterception.contentTypeJson).addMiddleware(MiddlewareInterception.cors)
+      .addMiddleware(MiddlewareInterception.contentTypeJson)
+      .addMiddleware(MiddlewareInterception.cors)
       .addHandler(cascadeHandler);
 
   customServer.initialize(
-      address: await CustomEnv().get<String>(key: 'server_address'),
-      port: await CustomEnv().get<int>(key: 'server_port'),
+      address: await CustomEnv.get<String>(key: 'server_address'),
+      port: await CustomEnv.get<int>(key: 'server_port'),
       handler: handler);
 }
