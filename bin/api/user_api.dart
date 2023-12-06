@@ -18,7 +18,7 @@ class UserApi extends Api {
       return Response.ok(user.toString());
     });
 
-    router.get('/user/<userEmail>', (Request req, String userEmail) async {
+    router.get('/useremail/<userEmail>', (Request req, String userEmail) async {
       var user = await _userService.findByEmail(userEmail);
       return Response.ok(user.toString());
     });
