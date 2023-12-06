@@ -34,6 +34,7 @@ class UserModel {
   factory UserModel.fromEmail(Map map) {
     return UserModel()..userId = map['user_id']?.toInt()
       ..userPassword = map['user_password']
+      ..userEmail = map['user_email']
       ..userName = map['user_name']
       ..userType = map['user_type']
       ..userCel = map['user_cel']
