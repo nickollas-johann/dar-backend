@@ -25,8 +25,18 @@ class OrdersDAO implements DAO<OrderModel> {
 
   @override
   Future<List<OrderModel>> getAll(int id) async {
-    var results =
-        await _dbConfig.execQuery('SELECT * FROM farm_db.orders_table WHERE user_id = ?;', [id]);
+    var results = await _dbConfig.execQuery(
+        'SELECT * FROM farm_db.orders_table WHERE user_id = ?;', [id]);
+    return results
+        .map((r) => OrderModel.fromMap(r.fields))
+        .toList()
+        .cast<OrderModel>();
+  }
+
+  Future<List<OrderModel>> getAllProfessional() async {
+    var results = await _dbConfig.execQuery(
+      'SELECT * FROM farm_db.orders_table;',
+    );
     return results
         .map((r) => OrderModel.fromMap(r.fields))
         .toList()

@@ -21,6 +21,14 @@ class OrdersApi extends Api {
           headers: {'content-type': 'application/json'});
     });
 
+    router.get('/orders', (Request req) async {
+      List<OrderModel> orders = await _service.findAllProfessional();
+      List<Map> ordersMap = orders.map((order) => order.toMap()).toList();
+
+      return Response.ok(jsonEncode(ordersMap),
+          headers: {'content-type': 'application/json'});
+    });
+
     router.post('/orders', (Request req) async {
       var body = await req.readAsString();
       _service.save(OrderModel.fromJson(body));

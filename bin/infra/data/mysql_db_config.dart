@@ -1,5 +1,4 @@
 import 'package:mysql1/mysql1.dart';
-
 import '../../utils/custom_env.dart';
 import 'db_config.dart';
 
@@ -7,7 +6,6 @@ class MySqlDBConfig implements DBConfig {
   MySqlConnection? _connection;
   @override
   Future<MySqlConnection> get connection async {
-    print('Funcionou');
    _connection ??= await createConnection();
     if (_connection == null) {
       throw Exception('ERROR/DB -> Failed to create connection');
@@ -19,11 +17,11 @@ class MySqlDBConfig implements DBConfig {
   Future<MySqlConnection> createConnection() async =>
       await MySqlConnection.connect(
         ConnectionSettings(
-          host: await CustomEnv.get<String>(key: 'server_address') ?? 'localhost',
-          port: await CustomEnv.get<int>(key: 'db_port') ?? 3306,
-          user: await CustomEnv.get<String>(key: 'db_user') ?? 'root',
-          password: await CustomEnv.get<String>(key: 'db_pass') ?? 'root',
-          db: await CustomEnv.get<String>(key: 'db') ?? 'farm_db',
+          host: await CustomEnv.get<String>(key: 'server_address'),
+          port: await CustomEnv.get<int>(key: 'db_port'),
+          user: await CustomEnv.get<String>(key: 'db_user'),
+          password: await CustomEnv.get<String>(key: 'db_pass'),
+          db: await CustomEnv.get<String>(key: 'db'),
         ),
       );
 

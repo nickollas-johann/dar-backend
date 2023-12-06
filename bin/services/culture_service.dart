@@ -31,4 +31,10 @@ class CultureService implements ServiceInterface<CultureModel> {
       return await _culturesDAO.update(value);
     }
   }
+  
+  @override
+  Future<List<CultureModel>> findAllProfessional() {
+    // TODO: implement findAllProfessional
+    throw UnimplementedError();
+  }
 }

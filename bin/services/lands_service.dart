@@ -29,4 +29,10 @@ class LandsService implements ServiceInterface<LandsModel> {
       return await _landsDAO.update(value);
     }
   }
+  
+  @override
+  Future<List<LandsModel>> findAllProfessional() {
+    // TODO: implement findAllProfessional
+    throw UnimplementedError();
+  }
 }

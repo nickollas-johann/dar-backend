@@ -29,4 +29,10 @@ class UserService implements ServiceInterface<UserModel> {
     }
   }
   Future<UserModel?> findByEmail(String email) async => await _userDAO.getByEmail(email);
+  
+  @override
+  Future<List<UserModel>> findAllProfessional() {
+    // TODO: implement findAllProfessional
+    throw UnimplementedError();
+  }
 }
