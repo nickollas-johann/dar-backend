@@ -33,7 +33,11 @@ class UserModel {
 
   factory UserModel.fromEmail(Map map) {
     return UserModel()..userId = map['user_id']?.toInt()
-      ..userPassword = map['user_password'];
+      ..userPassword = map['user_password']
+      ..userName = map['user_name']
+      ..userType = map['user_type']
+      ..userCel = map['user_cel']
+      ..userCrea = map['user_crea'];
   }
 
   factory UserModel.fromRequest(Map map) {
