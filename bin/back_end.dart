@@ -21,7 +21,7 @@ void main() async {
         di.get<LoginApi>().getHandler(),
       )
       .add(
-        di.get<UserApi>().getHandler(isSecurity: true),
+        di.get<UserApi>().getHandler(isSecurity: false),
       )
       .add(
         di.get<LandsApi>().getHandler(isSecurity: true),

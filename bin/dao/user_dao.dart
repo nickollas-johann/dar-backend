@@ -63,6 +63,6 @@ class UserDAO implements DAO<UserModel> {
         .execQuery('SELECT * FROM user_table WHERE user_email = ?;', [email]);
     return results.affectedRows == 0
         ? null
-        : UserModel.fromEmail(results.first.fields);
+        : UserModel.fromMap(results.first.fields);
   }
 }
