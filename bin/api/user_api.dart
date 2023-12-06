@@ -15,12 +15,12 @@ class UserApi extends Api {
 
     router.get('/user/<userId>', (Request req, String userId) async {
       var user = await _userService.findOne(int.parse(userId));
-      return Response.ok(user.toString());
+      return Response.ok(jsonEncode(user));
     });
 
     router.get('/useremail/<userEmail>', (Request req, String userEmail) async {
       var user = await _userService.findByEmail(userEmail);
-      return Response.ok(user.toString());
+      return Response.ok(jsonEncode(user));
     });
 
     router.post('/user', (Request req) async {
