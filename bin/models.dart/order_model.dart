@@ -32,8 +32,7 @@ class OrderModel {
   factory OrderModel.fromMap(Map<String, dynamic> map) {
     return OrderModel(
       orderId: map['order_id'] != null ? map['order_id'] as int : null,
-      orderDate: DateTime.parse(map["order_date"]),
-      // orderDate: DateTime.parse(map['order_date'].toString()).toUtc(),
+      orderDate: DateTime.parse(map['order_date'].toString()).toUtc(),
       orderDone: map['order_done']  == 1 ? true : false,
       userId: map['user_id'] as int,
       professionalId: map['professional_id'] as int,
