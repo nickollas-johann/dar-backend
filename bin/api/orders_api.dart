@@ -38,7 +38,7 @@ class OrdersApi extends Api {
     router.put('/orders', (Request req) async {
       var body = await req.readAsString();
       var result = await _service.save(OrderModel.fromJson(body));
-      return Response.ok(result);
+      return Response.ok(result.toString());
     });
 
     router.delete('/orders/<orderId>', (Request req, String orderId) async {
