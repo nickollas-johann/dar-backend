@@ -33,7 +33,7 @@ class OrderModel {
     return OrderModel(
       orderId: map['order_id'] != null ? map['order_id'] as int : null,
       orderDate: DateTime.parse(map['order_date'].toString()).toUtc(),
-      orderDone: map['order_done']  == 1 ? true : false,
+      orderDone: map['order_done']  == 0 ? true : false,
       userId: map['user_id'] as int,
       professionalId: map['professional_id'] as int,
       discription: map['discription'],
