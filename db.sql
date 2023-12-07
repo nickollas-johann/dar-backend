@@ -39,6 +39,7 @@ CREATE TABLE `orders_table` (
   `order_done` tinyint NOT NULL,
   `user_id` int NOT NULL,
   `professional_id` int NOT NULL,
+  `discription` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`order_id`),
   KEY `user_fk_order` (`user_id`),
   CONSTRAINT `user_fk_order` FOREIGN KEY (`user_id`) REFERENCES `user_table` (`user_id`),

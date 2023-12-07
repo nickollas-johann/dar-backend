@@ -7,6 +7,7 @@ class OrderModel {
   int professionalId;
   DateTime orderDate;
   bool orderDone;
+  String discription;
 
   OrderModel({
     this.orderId,
@@ -14,6 +15,7 @@ class OrderModel {
     required this.professionalId,
     required this.orderDate,
     this.orderDone = false,
+    required this.discription,
   });
 
   Map<String, dynamic> toMap() {
@@ -21,8 +23,9 @@ class OrderModel {
       'order_id': orderId,
       'order_date': orderDate,
       'order_done': orderDone,
-      'professional_id': professionalId,
       'user_id': userId,
+      'professional_id': professionalId,
+      'discription': discription,
     };
   }
 
@@ -33,6 +36,7 @@ class OrderModel {
       orderDone: map['order_done']  == 1 ? true : false,
       userId: map['user_id'] as int,
       professionalId: map['professional_id'] as int,
+      discription: map['discription'] as String,
     );
   }
 
