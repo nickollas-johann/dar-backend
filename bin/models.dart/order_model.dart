@@ -6,7 +6,7 @@ class OrderModel {
   int userId;
   int professionalId;
   DateTime orderDate;
-  bool orderDone;
+  int orderDone;
   String discription;
 
   OrderModel({
@@ -14,7 +14,7 @@ class OrderModel {
     required this.userId,
     required this.professionalId,
     required this.orderDate,
-    this.orderDone = false,
+    required this.orderDone,
     required this.discription,
   });
 
@@ -33,7 +33,7 @@ class OrderModel {
     return OrderModel(
       orderId: map['order_id'] != null ? map['order_id'] as int : null,
       orderDate: DateTime.parse(map['order_date'].toString()).toUtc(),
-      orderDone: map['order_done']  == 1 ? true : false,
+      orderDone: map['order_done'] as int,
       userId: map['user_id'] as int,
       professionalId: map['professional_id'] as int,
       discription: map['discription'],
