@@ -22,8 +22,8 @@ class CultureModel {
     return <String, dynamic>{
       'culture_id': cultureId,
       'culture_name': cultureName,
-      'culture_start': cultureStart.millisecondsSinceEpoch,
-      'estimated_time': estimatedTime.millisecondsSinceEpoch,
+      'culture_start': cultureStart.toIso8601String(),
+      'estimated_time': estimatedTime.toIso8601String(),
       'lands_id': landId,
       'culture_discription': cultureDiscription,
     };

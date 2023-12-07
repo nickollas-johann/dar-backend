@@ -35,7 +35,7 @@ class OrdersApi extends Api {
       return Response(201);
     });
 
-    router.put('/orders', (Request req, String orderId) async {
+    router.put('/orders/<orderId>', (Request req, String orderId) async {
       var body = await req.readAsString();
       var result = await _service.save(OrderModel.fromJson(body));
       return Response.ok(result);

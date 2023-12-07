@@ -46,7 +46,7 @@ class OrdersDAO implements DAO<OrderModel> {
   @override
   Future<OrderModel?> getOne(int id) async {
     var results = await _dbConfig.execQuery(
-        'SELECT * FROM farm_db.orders_table WHERE orders_id = ?;', [id]);
+        'SELECT * FROM farm_db.orders_table WHERE order_id = ?;', [id]);
     return results.affectedRows == 0
         ? null
         : OrderModel.fromMap(results.first.fields);
@@ -55,7 +55,7 @@ class OrdersDAO implements DAO<OrderModel> {
   @override
   Future<bool> update(OrderModel value) async {
     var results = await _dbConfig
-        .execQuery('UPDATE orders_table SET order_done = ?', [value.orderDone]);
+        .execQuery('UPDATE orders_table SET order_done = ? WHERE order_id = ?', [value.orderDone, value.orderId]);
 
     return results.affectedRows > 0;
   }
