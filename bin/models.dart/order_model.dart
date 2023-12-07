@@ -36,7 +36,7 @@ class OrderModel {
       orderDone: map['order_done']  == 1 ? true : false,
       userId: map['user_id'] as int,
       professionalId: map['professional_id'] as int,
-      discription: map['discription'] as String,
+      discription: map['discription'],
     );
   }
 

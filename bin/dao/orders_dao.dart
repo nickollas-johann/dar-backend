@@ -10,8 +10,8 @@ class OrdersDAO implements DAO<OrderModel> {
   @override
   Future<bool> create(OrderModel value) async {
     var results = await _dbConfig.execQuery(
-        'INSERT INTO orders_table (user_id, professional_id, order_date, order_done) VALUES (?,?,?,?)',
-        [value.userId, value.professionalId, value.orderDate, value.orderDone]);
+        'INSERT INTO orders_table (user_id, professional_id, order_date, order_done, discription) VALUES (?,?,?,?,?)',
+        [value.userId, value.professionalId, value.orderDate, value.orderDone, value.discription]);
     return results.affectedRows > 0;
   }
 
@@ -54,15 +54,8 @@ class OrdersDAO implements DAO<OrderModel> {
 
   @override
   Future<bool> update(OrderModel value) async {
-    var results = await _dbConfig.execQuery(
-        'UPDATE orders_table SET order_id = ?, user_id = ?, professional_id = ?, order_date = ?, order_done = ?',
-        [
-          value.orderId,
-          value.userId,
-          value.professionalId,
-          value.orderDate,
-          value.orderDone
-        ]);
+    var results = await _dbConfig
+        .execQuery('UPDATE orders_table SET order_done = ?', [value.orderDone]);
 
     return results.affectedRows > 0;
   }
